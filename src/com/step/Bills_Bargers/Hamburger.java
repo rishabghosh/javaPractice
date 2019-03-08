@@ -10,10 +10,6 @@ public class Hamburger {
     this(baseName, rollType, false, basePrice);
   }
 
-  public Hamburger(String rollType, double basePrice) {
-    this("", rollType, false, basePrice);
-  }
-
   public Hamburger(String baseName, String rollType, boolean hasMeat, double basePrice) {
     this.hasMeat = hasMeat;
     this.name = generateName(baseName, rollType);
