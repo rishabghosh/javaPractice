@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JewelleryBoxTest {
+
   @Test
   void name() {
-    JewelleryBox _5thLevelBox = new JewelleryBox();
+    Jewellery bracelet = new Jewellery("bracelet");
+    JewelleryBox _5thLevelBox = new JewelleryBox(bracelet);
     JewelleryBox _4thLevelBox = new JewelleryBox(_5thLevelBox);
 
     Jewellery necklace = new Jewellery("necklace");
@@ -18,7 +20,7 @@ class JewelleryBoxTest {
 
     JewelleryBox _1stLevelBox = new JewelleryBox(_2ndLevelBox);
 
-    assertEquals(2, _1stLevelBox.totalJewelleries());
+    assertEquals(3, _1stLevelBox.totalJewelleries());
   }
 
 }
