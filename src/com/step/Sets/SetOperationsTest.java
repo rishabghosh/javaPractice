@@ -49,6 +49,4 @@ class SetOperationsTest {
         assertEquals(expected, actual);
     }
 
-
-
 }
