@@ -27,7 +27,7 @@ public class Common {
         return book.getName().equals(nameOfBook);
     }
 
-    protected boolean hasBook(Book book) {
+    public boolean hasBook(Book book) {
         return this.books.contains(book);
     }
 
