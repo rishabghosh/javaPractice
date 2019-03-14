@@ -44,7 +44,6 @@ public class Common {
         System.out.printf("Book %s does not exist", nameOfBook);
     }
 
-
     protected void removeBook(Book book) {
         if (this.books.contains(book)) {
             this.books.remove(book);
@@ -63,6 +62,7 @@ public class Common {
     }
 
     protected List<Book> getBooks() {
-        return this.books;
+        List<Book> copyOfBooks = new ArrayList<>(this.books);
+        return copyOfBooks;
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Library extends Common {
     private List<BookReader> bookReaders = new ArrayList<>();
+    private List<Book> removedBooks = new ArrayList<>();
 
     public Library() {}
 
@@ -33,5 +34,18 @@ public class Library extends Common {
             return;
         }
         System.out.println("Invalid Reader or reader don't have this book");
+    }
+
+    public BookReader currentReaderOfBook(Book book){
+        for (BookReader reader:this.bookReaders) {
+            if(reader.hasBook(book)){
+                return reader;
+            }
+        }
+        return null;
+    }
+
+    public List<Book> checkAllBooksOfReader(BookReader reader){
+        return reader.getBooks();
     }
 }

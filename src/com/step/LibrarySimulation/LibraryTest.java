@@ -9,13 +9,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LibraryTest {
+    private final Book book1 = new Book("Harry Potter", 1123456L);
+    private final Book book2 = new Book("Hunger Games", 1123457L);
+    private final Book book3 = new Book("How To Kill A Mockingbird", 1234568L);
 
     @Test
     @DisplayName("should be able to add a new book")
     void addNewBook() {
-        Book book1 = new Book("Harry Potter", 1123456L);
         Library library = new Library();
         library.addNewBook(book1);
+
         List<Book> actual = library.getBooks();
         List<Book> expected = Arrays.asList(book1);
         assertEquals(expected, actual);
@@ -24,9 +27,6 @@ class LibraryTest {
     @Test
     @DisplayName("should be able to remove a new book")
     void removeBook() {
-        Book book1 = new Book("Harry Potter", 1123456L);
-        Book book2 = new Book("Hunger Games", 1123457L);
-
         Library library = new Library();
 
         library.addNewBook(book1);
@@ -42,43 +42,29 @@ class LibraryTest {
     @Test
     @DisplayName("should return true if any book of that name exists")
     void searchByName() {
-        Book book1 = new Book("Harry Potter", 1123456L);
-        Book book2 = new Book("Hunger Games", 1123457L);
-
         Library library = new Library();
 
         library.addNewBook(book1);
         library.addNewBook(book2);
 
-
-        boolean actual = library.searchByName("Harry Potter");
-        assertTrue(actual);
+        assertTrue(library.searchByName("Harry Potter"));
     }
 
     @Test
     @DisplayName("should return false if none of the book of that name exists")
     void searchByName2() {
-        Book book1 = new Book("Harry Potter", 1123456L);
-        Book book2 = new Book("Hunger Games", 1123457L);
-
         Library library = new Library();
 
         library.addNewBook(book1);
         library.addNewBook(book2);
 
-
-        boolean actual = library.searchByName("Maze Runner");
-        assertFalse(actual);
+        assertFalse(library.searchByName("Bad Book"));
     }
 
 
     @Test
     @DisplayName("should remove the book from library list and add it to readers list")
     void giveBookToReader() {
-        Book book1 = new Book("Harry Potter", 1123456L);
-        Book book2 = new Book("Hunger Games", 1123457L);
-        Book book3 = new Book("How To Kill A Mockingbird", 1234568L);
-
         BookReader john = new BookReader("John");
 
         Library library = new Library();
@@ -97,10 +83,6 @@ class LibraryTest {
     @Test
     @DisplayName("should remove the book from library list and add it to readers list")
     void returnBookFromReader() {
-        Book book1 = new Book("Harry Potter", 1123456L);
-        Book book2 = new Book("Hunger Games", 1123457L);
-        Book book3 = new Book("How To Kill A Mockingbird", 1234568L);
-
         BookReader john = new BookReader("John");
         john.addNewBook(book1);
 
@@ -114,5 +96,51 @@ class LibraryTest {
         List<Book> actual = library.getBooks();
         List<Book> expected = Arrays.asList(book1, book2, book3);
         assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
+    }
+
+    @Test
+    @DisplayName("should return the reader when the reader has the particular book")
+    void currentReaderOfBook1() {
+        BookReader john = new BookReader("John");
+        john.addNewBook(book1);
+
+        Library library = new Library();
+        library.addReader(john);
+        library.addNewBook(book2);
+        library.addNewBook(book3);
+
+        BookReader actual = library.currentReaderOfBook(book1);
+        BookReader expected = john;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should return null if there is no reader of the book")
+    void currentReaderOfBook2() {
+        BookReader john = new BookReader("John");
+
+        Library library = new Library();
+        library.addReader(john);
+        library.addNewBook(book2);
+        library.addNewBook(book3);
+
+        BookReader actual = library.currentReaderOfBook(book1);
+        assertEquals(null, actual);
+    }
+
+    @Test
+    @DisplayName("should return a list of all books the reader has")
+    void checkAllBooksOfReader() {
+        BookReader john = new BookReader("John");
+        john.addNewBook(book1);
+        john.addNewBook(book2);
+        john.addNewBook(book3);
+
+        Library library = new Library();
+        library.addReader(john);
+
+        List<Book> actual = library.checkAllBooksOfReader(john);
+        List<Book> expected = Arrays.asList(book1, book2, book3);
+        assertEquals(expected, actual);
     }
 }
