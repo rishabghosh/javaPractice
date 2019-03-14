@@ -18,13 +18,18 @@ class LibrarianTest {
 
     private Library library;
     private Librarian librarian;
+    private BookReader reader1;
 
     @BeforeEach
     void setUp() {
+        reader1 = new BookReader("John");
+
         library = new Library();
         library.addNewBook(book1);
         library.addNewBook(book2);
         library.addNewBook(book3);
+
+        library.addReader(reader1);
 
         librarian = new Librarian(library);
     }
@@ -36,10 +41,7 @@ class LibrarianTest {
     @Test
     @DisplayName("should remove the book from library list and add it to readers list")
     void giveBookToReader() {
-        BookReader john = new BookReader("John");
-        library.addReader(john);
-
-        librarian.giveBookToReader(john, book1);
+        librarian.giveBookToReader(reader1, book1);
 
         List<Book> actual = library.getBooks();
         List<Book> expected = Arrays.asList(book2, book3);
@@ -47,13 +49,11 @@ class LibrarianTest {
     }
 
     @Test
-    @DisplayName("should remove the book from library list and add it to readers list")
-    void returnBookFromReader() {
-        BookReader john = new BookReader("John");
-        john.addNewBook(book1);
-        library.addReader(john);
+    @DisplayName("should add the book to libraries list")
+    void returnBookFromReader1() {
+        reader1.addNewBook(book1);
 
-        librarian.returnBookFromReader(john, book1);
+        librarian.returnBookFromReader(reader1, book1);
 
         List<Book> actual = library.getBooks();
         List<Book> expected = Arrays.asList(book1, book2, book3);
@@ -61,24 +61,30 @@ class LibrarianTest {
     }
 
     @Test
+    @DisplayName("should remove the book from readers list")
+    void returnBookFromReader2() {
+        reader1.addNewBook(book1);
+
+        librarian.returnBookFromReader(reader1, book1);
+
+        List<Book> actual = reader1.getBooks();
+        List<Book> expected = Arrays.asList();
+        assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
+    }
+
+    @Test
     @DisplayName("should return the reader when the reader has the particular book")
     void currentReaderOfBook1() {
-        BookReader john = new BookReader("John");
-        john.addNewBook(book1);
-        library.addReader(john);
+        reader1.addNewBook(book1);
 
         BookReader actual = librarian.currentReaderOfBook(book1);
-        BookReader expected = john;
+        BookReader expected = reader1;
         assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("should return null if there is no reader of the book")
     void currentReaderOfBook2() {
-        BookReader john = new BookReader("John");
-
-        library.addReader(john);
-
         BookReader actual = librarian.currentReaderOfBook(book1);
         assertEquals(null, actual);
     }
@@ -86,14 +92,11 @@ class LibrarianTest {
     @Test
     @DisplayName("should return a list of all books the reader has")
     void checkAllBooksOfReader() {
-        BookReader john = new BookReader("John");
-        john.addNewBook(book1);
-        john.addNewBook(book2);
-        john.addNewBook(book3);
+        reader1.addNewBook(book1);
+        reader1.addNewBook(book2);
+        reader1.addNewBook(book3);
 
-        library.addReader(john);
-
-        List<Book> actual = librarian.checkAllBooksOfReader(john);
+        List<Book> actual = librarian.checkAllBooksOfReader(reader1);
         List<Book> expected = Arrays.asList(book1, book2, book3);
         assertEquals(expected, actual);
     }
@@ -105,7 +108,6 @@ class LibrarianTest {
         library.removeBook(book1);
         library.removeBook(book2);
 
-        Librarian librarian = new Librarian(library);
         librarian.bringBack(book1);
 
         List<Book> actual = library.getRemovedBooks();
@@ -118,7 +120,6 @@ class LibrarianTest {
     void bringBack2() {
         library.removeBook(book1);
 
-        Librarian librarian = new Librarian(library);
         librarian.bringBack(book1);
 
         List<Book> actual = library.getBooks();
