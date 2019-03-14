@@ -1,5 +1,7 @@
 package com.step.LibrarySimulation;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,18 +16,28 @@ class LibrarianTest {
     private final Book book2 = new Book("Hunger Games", 1123457L);
     private final Book book3 = new Book("How To Kill A Mockingbird", 1234568L);
 
-    @Test
-    @DisplayName("should remove the book from library list and add it to readers list")
-    void giveBookToReader() {
-        BookReader john = new BookReader("John");
+    private Library library;
+    private Librarian librarian;
 
-        Library library = new Library();
-        library.addReader(john);
+    @BeforeEach
+    void setUp() {
+        library = new Library();
         library.addNewBook(book1);
         library.addNewBook(book2);
         library.addNewBook(book3);
 
-        Librarian librarian = new Librarian(library);
+        librarian = new Librarian(library);
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+
+    @Test
+    @DisplayName("should remove the book from library list and add it to readers list")
+    void giveBookToReader() {
+        BookReader john = new BookReader("John");
+        library.addReader(john);
 
         librarian.giveBookToReader(john, book1);
 
@@ -39,13 +51,7 @@ class LibrarianTest {
     void returnBookFromReader() {
         BookReader john = new BookReader("John");
         john.addNewBook(book1);
-
-        Library library = new Library();
         library.addReader(john);
-        library.addNewBook(book2);
-        library.addNewBook(book3);
-
-        Librarian librarian = new Librarian(library);
 
         librarian.returnBookFromReader(john, book1);
 
@@ -59,13 +65,7 @@ class LibrarianTest {
     void currentReaderOfBook1() {
         BookReader john = new BookReader("John");
         john.addNewBook(book1);
-
-        Library library = new Library();
         library.addReader(john);
-        library.addNewBook(book2);
-        library.addNewBook(book3);
-
-        Librarian librarian = new Librarian(library);
 
         BookReader actual = librarian.currentReaderOfBook(book1);
         BookReader expected = john;
@@ -77,12 +77,7 @@ class LibrarianTest {
     void currentReaderOfBook2() {
         BookReader john = new BookReader("John");
 
-        Library library = new Library();
         library.addReader(john);
-        library.addNewBook(book2);
-        library.addNewBook(book3);
-
-        Librarian librarian = new Librarian(library);
 
         BookReader actual = librarian.currentReaderOfBook(book1);
         assertEquals(null, actual);
@@ -96,10 +91,7 @@ class LibrarianTest {
         john.addNewBook(book2);
         john.addNewBook(book3);
 
-        Library library = new Library();
         library.addReader(john);
-
-        Librarian librarian = new Librarian(library);
 
         List<Book> actual = librarian.checkAllBooksOfReader(john);
         List<Book> expected = Arrays.asList(book1, book2, book3);
@@ -110,10 +102,6 @@ class LibrarianTest {
     @Test
     @DisplayName("should remove the book from removed books list")
     void bringBack1() {
-        Library library = new Library();
-        library.addNewBook(book1);
-        library.addNewBook(book2);
-        library.addNewBook(book3);
         library.removeBook(book1);
         library.removeBook(book2);
 
@@ -128,10 +116,6 @@ class LibrarianTest {
     @Test
     @DisplayName("should add the book to library")
     void bringBack2() {
-        Library library = new Library();
-        library.addNewBook(book1);
-        library.addNewBook(book2);
-        library.addNewBook(book3);
         library.removeBook(book1);
 
         Librarian librarian = new Librarian(library);
