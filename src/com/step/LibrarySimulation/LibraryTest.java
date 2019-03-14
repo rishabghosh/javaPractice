@@ -25,19 +25,35 @@ class LibraryTest {
     }
 
     @Test
-    @DisplayName("should be able to remove a new book")
-    void removeBook() {
+    @DisplayName("should be able remove a book when given the book object")
+    void removeBook1() {
         Library library = new Library();
 
         library.addNewBook(book1);
         library.addNewBook(book2);
 
-        library.removeBook("Harry Potter");
+        library.removeBook(book1);
+
+        List<Book> actual = library.getRemovedBooks();
+        List<Book> expected = Arrays.asList(book1);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should add the removed book to the removed book list")
+    void removeBook2() {
+        Library library = new Library();
+
+        library.addNewBook(book1);
+        library.addNewBook(book2);
+
+        library.removeBook(book1);
 
         List<Book> actual = library.getBooks();
         List<Book> expected = Arrays.asList(book2);
         assertEquals(expected, actual);
     }
+
 
     @Test
     @DisplayName("should return true if any book of that name exists")
