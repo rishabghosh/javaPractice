@@ -69,8 +69,6 @@ class BookReaderTest {
     }
 
 
-
-
     /* ======== Testing New Methods ========= */
 
 
@@ -82,7 +80,7 @@ class BookReaderTest {
 
     @Test
     @DisplayName("should remove the book from library list")
-    void giveBookToReader() {
+    void take() {
         reader.take(book1);
 
         List<Book> actual = library.getBooks();
@@ -91,8 +89,19 @@ class BookReaderTest {
     }
 
     @Test
+    @DisplayName("should not add the book to removed list of library")
+    void take2() {
+        reader.take(book1);
+
+        List<Book> actual = library.getRemovedBooks();
+        List<Book> expected = Arrays.asList();
+        assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
+    }
+
+
+    @Test
     @DisplayName("should add the book to readers list")
-    void giveBookToReader2() {
+    void take3() {
         reader.take(book1);
 
         List<Book> actual = reader.getBooks();

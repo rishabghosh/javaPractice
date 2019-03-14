@@ -15,6 +15,7 @@ public class BookReader extends Common {
 
     public void take(Book book) {
         library.removeBook(book);
+        library.removePermanently(book);
         super.addNewBook(book);
     }
 
