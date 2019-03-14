@@ -26,7 +26,7 @@ class LibraryTest {
     }
 
 
-    /* ======= Testing Unchanged Methods ======== */
+    /* ======= Testing Parent's Methods ======== */
 
 
     @Test

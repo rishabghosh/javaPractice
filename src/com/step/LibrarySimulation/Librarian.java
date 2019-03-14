@@ -9,30 +9,8 @@ public class Librarian {
         this.library = library;
     }
 
-    private boolean isReaderValid(BookReader candidate) {
-        return library.getBookReaders().contains(candidate);
-    }
-
     public boolean isBookRemoved(Book book){
         return library.getRemovedBooks().contains(book);
-    }
-
-    public void giveBookToReader(BookReader reader, Book book) {
-        if (isReaderValid(reader) && library.hasBook(book)) {
-            library.removeBook(book);
-            reader.addNewBook(book);
-            return;
-        }
-        System.out.println("Invalid Reader or book name");
-    }
-
-    public void returnBookFromReader(BookReader reader, Book book){
-        if(isReaderValid(reader) && reader.hasBook(book)){
-            reader.removeBook(book);
-            library.addNewBook(book);
-            return;
-        }
-        System.out.println("Invalid Reader or reader don't have this book");
     }
 
     public BookReader currentReaderOfBook(Book book){

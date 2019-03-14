@@ -14,8 +14,7 @@ public class BookReader extends Common {
     }
 
     public void take(Book book) {
-        library.removeBook(book);
-        library.removePermanently(book);
+        library.transferBook(book);
         super.addNewBook(book);
     }
 
@@ -25,8 +24,7 @@ public class BookReader extends Common {
     }
 
     public void borrowBookFromLibrary(Book book) {
-        library.removeBook(book);
-        library.removePermanently(book);
+        library.transferBook(book);
         super.addNewBook(book);
     }
 

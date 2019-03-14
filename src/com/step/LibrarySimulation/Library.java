@@ -15,6 +15,10 @@ public class Library extends Common {
         this.removedBooks.add(book);
     }
 
+    public void transferBook(Book book){
+        super.removeBook(book);
+    }
+
     public void addReader(BookReader reader) {
         this.bookReaders.add(reader);
     }

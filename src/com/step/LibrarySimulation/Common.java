@@ -35,15 +35,6 @@ public class Common {
         this.books.add(newBook);
     }
 
-//    public void removeBook(String nameOfBook) {
-//        if (searchByName(nameOfBook)) {
-//            Book book = getBookByName(nameOfBook);
-//            this.books.remove(book);
-//            return;
-//        }
-//        System.out.printf("Book %s does not exist", nameOfBook);
-//    }
-
     public void removeBook(Book book) {
         if (hasBook(book)) {
             this.books.remove(book);

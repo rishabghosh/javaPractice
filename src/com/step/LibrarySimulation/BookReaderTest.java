@@ -33,7 +33,7 @@ class BookReaderTest {
     }
 
 
-    /* ======= Testing Unchanged Methods ======== */
+    /* ======= Testing Parent's Methods ======== */
 
 
     @Test
@@ -47,7 +47,7 @@ class BookReaderTest {
     @Test
     @DisplayName("should return true if any book of that name exists")
     void searchByName() {
-        assertTrue(reader.searchByName("Harry Potter"));
+        assertTrue(reader.searchByName("Kite Runner"));
     }
 
     @Test
