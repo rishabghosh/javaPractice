@@ -15,6 +15,7 @@ class LibrarianTest {
     private final Book book1 = new Book("Harry Potter", 1123456L);
     private final Book book2 = new Book("Hunger Games", 1123457L);
     private final Book book3 = new Book("How To Kill A Mockingbird", 1234568L);
+    private final Book book4 = new Book("Sherlock Homes", 1234569L);
 
     private Library library;
     private Librarian librarian;
@@ -127,4 +128,36 @@ class LibrarianTest {
         List<Book> expected = Arrays.asList(book1, book2, book3);
         assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
     }
+
+    @Test
+    @DisplayName("should be able to add new book to library")
+    void addBookToLibrary(){
+        librarian.addBookToLibrary(book4);
+        List<Book> actual = library.getBooks();
+        List<Book> expected = Arrays.asList(book1, book2, book3, book4);
+        assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
+    }
+
+    @Test
+    @DisplayName("should be able to delete a book from library")
+    void removeBookFromLibrary(){
+        librarian.removeBookFromLibrary(book3);
+        List<Book> actual = library.getBooks();
+        List<Book> expected = Arrays.asList(book1, book2);
+        assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
+    }
+
+    @Test
+    @DisplayName("should return true if the book has been remove in the past")
+    void isBookRemoved(){
+        librarian.removeBookFromLibrary(book3);
+        assertTrue(librarian.isBookRemoved(book3));
+    }
+
+    @Test
+    @DisplayName("should return false if the book has been remove in the past")
+    void isBookRemoved2(){
+        assertFalse(librarian.isBookRemoved(book3));
+    }
+
 }

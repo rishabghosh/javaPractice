@@ -13,11 +13,9 @@ public class Librarian {
         return library.getBookReaders().contains(candidate);
     }
 
-    private boolean isBookRemoved(Book book){
+    public boolean isBookRemoved(Book book){
         return library.getRemovedBooks().contains(book);
     }
-
-
 
     public void giveBookToReader(BookReader reader, Book book) {
         if (isReaderValid(reader) && library.hasBook(book)) {
@@ -57,5 +55,13 @@ public class Librarian {
             return;
         }
         System.out.println("Book does not exist in removed list");
+    }
+
+    public void addBookToLibrary(Book book) {
+        library.addNewBook(book);
+    }
+
+    public void removeBookFromLibrary(Book book) {
+        library.removeBook(book);
     }
 }
