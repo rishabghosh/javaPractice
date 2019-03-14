@@ -26,4 +26,8 @@ public class Library extends Common {
     public List<Book> getRemovedBooks() {
         return this.removedBooks;
     }
+
+    public void removePermanently(Book book){
+        this.removedBooks.remove(book);
+    }
 }

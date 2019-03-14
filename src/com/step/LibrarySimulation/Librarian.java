@@ -13,6 +13,11 @@ public class Librarian {
         return library.getBookReaders().contains(candidate);
     }
 
+    private boolean isBookRemoved(Book book){
+        return library.getRemovedBooks().contains(book);
+    }
+
+
 
     public void giveBookToReader(BookReader reader, Book book) {
         if (isReaderValid(reader) && library.hasBook(book)) {
@@ -25,7 +30,6 @@ public class Librarian {
 
     public void returnBookFromReader(BookReader reader, Book book){
         if(isReaderValid(reader) && reader.hasBook(book)){
-            System.out.println(book);
             reader.removeBook(book);
             library.addNewBook(book);
             return;
@@ -46,13 +50,9 @@ public class Librarian {
         return reader.getBooks();
     }
 
-    public boolean isBookRemoved(Book book){
-        return library.getRemovedBooks().contains(book);
-    }
-
     public void bringBack(Book book){
-        if(library.getRemovedBooks().contains(book)){
-            library.removeBook(book);
+        if(isBookRemoved(book)){
+            library.removePermanently(book);
             library.addNewBook(book);
             return;
         }

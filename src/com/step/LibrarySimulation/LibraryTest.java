@@ -77,5 +77,20 @@ class LibraryTest {
         assertFalse(library.searchByName("Bad Book"));
     }
 
+    @Test
+    @DisplayName("should remove book from removed books list")
+    void removePermanently() {
+        Library library = new Library();
+        library.addNewBook(book1);
+        library.addNewBook(book2);
+        library.removeBook(book1);
+
+        library.removePermanently(book1);
+
+        List<Book> actual = library.getRemovedBooks();
+        List<Book> expected = Arrays.asList();
+        assertEquals(expected, actual);
+    }
+
 
 }

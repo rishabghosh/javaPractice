@@ -106,4 +106,39 @@ class LibrarianTest {
         assertEquals(expected, actual);
     }
 
+
+    @Test
+    @DisplayName("should remove the book from removed books list")
+    void bringBack1() {
+        Library library = new Library();
+        library.addNewBook(book1);
+        library.addNewBook(book2);
+        library.addNewBook(book3);
+        library.removeBook(book1);
+        library.removeBook(book2);
+
+        Librarian librarian = new Librarian(library);
+        librarian.bringBack(book1);
+
+        List<Book> actual = library.getRemovedBooks();
+        List<Book> expected = Arrays.asList(book2);
+        assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
+    }
+
+    @Test
+    @DisplayName("should add the book to library")
+    void bringBack2() {
+        Library library = new Library();
+        library.addNewBook(book1);
+        library.addNewBook(book2);
+        library.addNewBook(book3);
+        library.removeBook(book1);
+
+        Librarian librarian = new Librarian(library);
+        librarian.bringBack(book1);
+
+        List<Book> actual = library.getBooks();
+        List<Book> expected = Arrays.asList(book1, book2, book3);
+        assertTrue(expected.containsAll(actual) && actual.containsAll(expected));
+    }
 }
